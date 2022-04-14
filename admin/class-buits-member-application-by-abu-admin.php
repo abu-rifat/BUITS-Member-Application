@@ -73,8 +73,23 @@ class Buits_Member_Application_By_Abu_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/buits-member-application-by-abu-admin.css', array(), $this->version, 'all' );
+		//Custom Code Start
 
+		$valid_pages=array("buits-member-applications","buits-add-new-member");
+		$page=isset($_REQUEST['page'])?$_REQUEST['page']:"";
+
+		if(in_array($page,$valid_pages)){
+			wp_enqueue_style( "owt-bootstrap", BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL . 'assets/css/bootstrap.min.css', array(), $this->version, 'all' );
+
+			wp_enqueue_style( "owt-datatable", BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL . 'assets/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
+
+			wp_enqueue_style( "owt-sweetalert", BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL . 'assets/css/sweetalert.css', array(), $this->version, 'all' );
+		}
+
+		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/buits-member-application-by-abu-admin.css', array(), $this->version, 'all' );
+
+
+		//Custom Code End
 	}
 
 	/**
@@ -96,6 +111,26 @@ class Buits_Member_Application_By_Abu_Admin {
 		 * class.
 		 */
 
+		//Custom Code Start
+
+		$valid_pages=array("buits-member-applications","buits-add-new-member");
+		$page=isset($_REQUEST['page'])?$_REQUEST['page']:"";
+		if(in_array($page,$valid_pages)){
+
+			wp_enqueue_script("jquery");
+			wp_enqueue_script( "owt-bootstrap-js", BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL . 'assets/js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( "owt-datatable-js", BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL . 'assets/js/jquery.dataTables.min.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( "owt-validate-js", BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL . 'assets/js/jquery.validate.min.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( "owt-sweetalert-js", BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL . 'assets/js/sweetalert.min.js', array( 'jquery' ), $this->version, false );
+
+		}
+
+
+		//Custom Code End
+
+
+
+
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/buits-member-application-by-abu-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
@@ -105,12 +140,27 @@ class Buits_Member_Application_By_Abu_Admin {
 	public function member_application_menu(){
 		//add_menu_page("BUITS Member Applications", "BUITS Member Applications", "manage-options", "buits-member-applications", array($this,"member_application_dashboard"));
 		add_menu_page( 'BUITS Member Applications', 'BUITS Member Applications', 'manage_options', 'buits-member-applications', array($this,'member_application_dashboard'), 'dashicons-id-alt', 5 );
+		add_submenu_page('buits-member-applications', 'Dashboard','Dashboard','manage_options','buits-member-applications', array($this,'member_application_dashboard'));
+		add_submenu_page('buits-member-applications', 'Add New','Add New','manage_options','buits-add-new-member', array($this,'add_new_member'));
 
 	}
 
 	public function member_application_dashboard(){
-		echo "<h1>BUITS Member Applications</h1>";
+		ob_start();
+		include_once(BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_PATH."admin/partials/template-application-list.php");
+		$template = ob_get_contents();
+		ob_end_clean();
+		echo $template;
 	}
+
+	public function add_new_member(){
+		ob_start();
+		include_once(BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_PATH."admin/partials/template-add-new-member.php");
+		$template = ob_get_contents();
+		ob_end_clean();
+		echo $template;
+	}
+
 	//Custom Code End
 
 }

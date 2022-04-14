@@ -36,6 +36,13 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'BUITS_MEMBER_APPLICATION_BY_ABU_VERSION', '1.0.0' );
+define( 'BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+
+//Custom Code Start
+
+
+//Custom Code End
 
 /**
  * The code that runs during plugin activation.
