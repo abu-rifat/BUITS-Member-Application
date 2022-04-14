@@ -146,11 +146,7 @@ class Buits_Member_Application_By_Abu_Admin {
 	}
 
 	public function member_application_dashboard(){
-		ob_start();
-		include_once(BUITS_MEMBER_APPLICATION_BY_ABU_PLUGIN_PATH."admin/partials/template-application-list.php");
-		$template = ob_get_contents();
-		ob_end_clean();
-		echo $template;
+		echo "<h3>BUITS Member Applications</h3>";
 	}
 
 	public function add_new_member(){
